@@ -8,4 +8,3 @@ def build(setup_kwargs):
     setup_kwargs.update(
         {"ext_modules": [Extension("unibuf._unibuf", ["unibuf/_unibuf.c"])]}
     )
-

@@ -1,0 +1,25 @@
+image: python:latest
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache"
+
+cache:
+  untracked: true
+  key: python-unicode-buffer-pip-cache
+  paths:
+    - .cache/
+
+checks:
+  stage: build
+  script:
+    - pip install poetry
+    - poetry install
+    - poetry run mypy unibuf tests
+    - poetry run flake8 unibuf tests
+    - poetry run black --check unibuf tests
+    - poetry run pytest tests --hypothesis-show-statistics
+  artifacts:
+    paths:
+      - .hypothesis
+    expire_in: 1 day
